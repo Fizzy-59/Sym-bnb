@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1>{{ title | upper }}</h1>
+
+<p>Comment ça va ?</p>
+
+<a href="{{ path('helloPrenom', {'prenom' :'Romain'}  ) }}">Coucou</a>
+
+{% if age >= 18 %}
+<p>Vous êtes un adulte</p>
+    {% else %}
+    <p>Vous êtes un enfant</p>
+{% endif %}
+
+{% for prenom, age in tableau %}
+<p>{{ prenom }} a {{ age }}</p>
+{% endfor %}
+
+{% endblock %}
