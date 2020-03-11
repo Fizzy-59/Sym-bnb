@@ -34,10 +34,10 @@ class AdController extends AbstractController
      * @param AdRepository $adRepository
      * @return Response
      */
-    public function show ($slug, AdRepository $adRepository)
+    public function show ($slug, AdRepository $repo)
     {
 
-        $ad = $adRepository->findOneBySlug($slug);
+        $ad = $repo->findOneBySlug($slug);
 
         return $this->render('ad/show.html.twig',
             [
