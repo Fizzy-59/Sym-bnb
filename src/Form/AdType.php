@@ -40,15 +40,21 @@ class AdType extends AbstractType
         $builder
             ->add('title', TextType::class,
                 $this->getConfiguration("Titre", "Tapez un super titre pour votre annonce !"))
+
             ->add('introduction', TextType::class,
                 $this->getConfiguration("Introduction", "Donnez une description globale de l'annonce"))
+
             ->add('content', TextareaType::class,
                 $this->getConfiguration("Description détaillé", "Taper une bonne description"))
+
             ->add('rooms', IntegerType::class,
                 $this->getConfiguration("Nombre de chambre", "Nombre de chambre disponibles"))
+
             ->add('price', MoneyType::class,
                 $this->getConfiguration("Prix par nuit", "Indiquer le prix pour une nuit"))
-            ->add('slug', TextType::class, $this->getConfiguration("Chaine URL", "Adresse web (automatique)"))
+
+            //->add('slug', TextType::class, $this->getConfiguration("Chaine URL", "Adresse web (automatique)"))
+
             ->add('coverImage', UrlType::class,
                 $this->getConfiguration("URL de l'image principale", "Donnez l'adresse de l'image"))
         ;
