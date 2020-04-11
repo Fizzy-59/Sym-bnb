@@ -53,7 +53,7 @@ class AdType extends AbstractType
             ->add('price', MoneyType::class,
                 $this->getConfiguration("Prix par nuit", "Indiquer le prix pour une nuit"))
 
-            //->add('slug', TextType::class, $this->getConfiguration("Chaine URL", "Adresse web (automatique)"))
+            ->add('slug', TextType::class, $this->getConfiguration("Chaine URL", "Adresse web (automatique)"))
 
             ->add('coverImage', UrlType::class,
                 $this->getConfiguration("URL de l'image principale", "Donnez l'adresse de l'image"))
