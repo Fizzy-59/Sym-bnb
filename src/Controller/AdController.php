@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\Ad;
 use App\Form\AdType;
 use App\Repository\AdRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,10 +36,10 @@ class AdController extends AbstractController
      *
      * @Route("/ads/new", name="ads_create")
      * @param Request $request
-     * @param ObjectManager $manager
+     * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function create(Request $request, AdRepository $manager )
+    public function create(Request $request, EntityManagerInterface $manager )
     {
         $ad = new Ad();
         $form = $this->createForm(AdType::class, $ad);
