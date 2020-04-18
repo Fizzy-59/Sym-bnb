@@ -40,16 +40,29 @@
 
 {% block _ad_images_entry_widgets %}
 
-    <div class="form-group">
+    <div class="form-group" id="block_{{ id }}">
+
         <div class="row">
-            <div class="col">
-                {{ form_widget(form.url) }}
+            <div class="col-10">
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_widget(form.url) }}
+                    </div>
+
+                    <div class="col">
+                        {{ form_widget(form.caption) }}
+                    </div>
+                </div>
+
             </div>
 
-            <div class="col">
-                {{ form_widget(form.caption) }}
+            <div class="col-2">
+                <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
             </div>
+
         </div>
+
     </div>
 
 {% endblock %}
@@ -68,7 +81,22 @@
             // J'injecte ce code au sein de la div
             $('#ad_images').append(tmpl);
 
-        })
+            // Gère le boutton supprimer
+            handleDeleteButtons();
+
+        });
+
+        function handleDeleteButtons()
+        {
+            $('button[data-action="delete"]').click(function ()
+            {
+                const target = this.dataset.target;
+                $(target).remove();
+            })
+        }
+
+        handleDeleteButtons();
+
     </script>
 
 {% endblock %}
