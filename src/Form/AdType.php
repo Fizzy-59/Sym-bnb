@@ -35,7 +35,6 @@ class AdType extends AbstractType
             ]
         ];
     }
-//    TODO text Area bug
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -62,7 +61,8 @@ class AdType extends AbstractType
 
             ->add('images', CollectionType::class,
                 [
-                    'entry_type' => ImageType::class
+                    'entry_type' => ImageType::class,
+                    'allow_add' => true
                 ])
         ;
     }
