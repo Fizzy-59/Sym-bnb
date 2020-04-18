@@ -59,6 +59,7 @@ class AdType extends AbstractType
             ->add('coverImage', UrlType::class,
                 $this->getConfiguration("URL de l'image principale", "Donnez l'adresse de l'image"))
 
+            // Mise en place d'un sous formulaire qui peut se répéter à la demande
             ->add('images', CollectionType::class,
                 [
                     'entry_type' => ImageType::class,

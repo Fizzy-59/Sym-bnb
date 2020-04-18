@@ -49,6 +49,13 @@ class AdController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
+//          Prise en compte des nouvelles images pour les faires persister avant de faire persister l'annonce
+            foreach ($ad->getImages() as $image)
+            {
+                $image->setAd($ad);
+                $manager->persist($image);
+            }
+
             $manager->persist($ad);
             $manager->flush();
 
