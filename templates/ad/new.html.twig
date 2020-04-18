@@ -28,6 +28,8 @@
 
     {{ form_widget(form) }}
 
+    <input type="hidden" id="widgets-counter" value="0">
+
     <div class="form-group">
         <button type="button" id="add-image" class="btn btn-primary">Ajoutez une image.</button>
     </div>
@@ -56,7 +58,7 @@
                 </div>
 
             </div>
-
+{#TODO Le boutton  ne s'affiche pas#}
             <div class="col-2">
                 <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
             </div>
@@ -73,13 +75,15 @@
         $('#add-image').click(function ()
         {
             // Recupére le numéros de futures champs créé
-            const index = $('#ad_images div.form-group').length;
+            const index = +$('#widgets-counter').val();
 
             // Recupe le prototype des entrées
             const tmpl = $("#ad_images").data('prototype').replace(/__name__/g, index);
 
             // J'injecte ce code au sein de la div
             $('#ad_images').append(tmpl);
+
+            $('#widgets-counter').val(index + 1);
 
             // Gère le boutton supprimer
             handleDeleteButtons();
