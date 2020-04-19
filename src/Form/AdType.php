@@ -20,20 +20,21 @@ class AdType extends AbstractType
     /**
      * Permet d'avoir la configuration de base d'un champ.
      *
-     * @param string $label
-     * @param string $placeholder
+     * @param  string $label
+     * @param  string $placeholder
+     * @param  array $options
      * @return array
      */
-    private function getConfiguration(string $label, string $placeholder)
+    private function getConfiguration(string $label, string $placeholder, $options = [])
     {
-        return
+        return array_merge(
         [
             'label' => $label,
             'attr' =>
             [
                 'placeholder' => $placeholder
             ]
-        ];
+        ], $options);
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -54,7 +55,8 @@ class AdType extends AbstractType
                 $this->getConfiguration("Prix par nuit", "Indiquer le prix pour une nuit"))
 
             ->add('slug', TextType::class,
-                $this->getConfiguration("Chaine URL", "Adresse web (automatique)"))
+                $this->getConfiguration("Chaine URL", "Adresse web (automatique)",
+                    ['required' => false] ))
 
             ->add('coverImage', UrlType::class,
                 $this->getConfiguration("URL de l'image principale", "Donnez l'adresse de l'image"))

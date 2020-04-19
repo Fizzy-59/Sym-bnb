@@ -66,7 +66,7 @@ class Ad
     }
 
     /**
-     * Initialise le slug
+     * Initialise le slug si il n'y en a pas
      *
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
