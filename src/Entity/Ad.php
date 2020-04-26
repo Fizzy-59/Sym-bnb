@@ -50,7 +50,7 @@ class Ad
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\Length(min=100, max=255, minMessage="La description doit faire plus de 100 caractères.",
+     * @Assert\Length(min=100, max=1500, minMessage="La description doit faire plus de 100 caractères.",
      *     maxMessage="La description ne peut pas faire plus de 255 caractères." )
      */
     private $content;

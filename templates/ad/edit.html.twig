@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Modifier une annonce {% endblock %}
+
+{% form_theme form _self %}
+
+{% block body %}
+
+    <diV class="container">
+
+        <h1>Modifier l'annonce : {{ ad.title }}</h1>
+
+        {{ form_start(form)}}
+
+        {{ form_widget(form) }}
+
+        <button type="submit" class="btn btn-primary"> Modifier l'annonce. </button>
+
+        {{ form_end(form) }}
+
+    </diV>
+
+{% endblock %}
+
+{% block _ad_images_widget %}
+
+    <p>Ici, vous pouvez ajouter vos propres images ! </p>
+
+    {{ form_widget(form) }}
+
+    <input type="hidden" id="widgets-counter" value="0">
+
+    <div class="form-group">
+        <button type="button" id="add-image" class="btn btn-primary">Ajoutez une image.</button>
+    </div>
+
+{% endblock %}
+
+{% block _ad_images_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _ad_images_entry_widgets %}
+
+    <div class="form-group" id="block_{{ id }}">
+
+        <div class="row">
+            <div class="col-10">
+
+                <div class="row">
+                    <div class="col">
+                        {{ form_widget(form.url) }}
+                    </div>
+
+                    <div class="col">
+                        {{ form_widget(form.caption) }}
+                    </div>
+                </div>
+
+            </div>
+            {#TODO Le boutton  ne s'affiche pas#}
+            <div class="col-2">
+                <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $('#add-image').click(function ()
+        {
+            // Recupére le numéros de futures champs créé
+            const index = +$('#widgets-counter').val();
+
+            // Recupe le prototype des entrées
+            const tmpl = $("#ad_images").data('prototype').replace(/__name__/g, index);
+
+            // J'injecte ce code au sein de la div
+            $('#ad_images').append(tmpl);
+
+            $('#widgets-counter').val(index + 1);
+
+            // Gère le boutton supprimer
+            handleDeleteButtons();
+
+        });
+
+        function handleDeleteButtons()
+        {
+            $('button[data-action="delete"]').click(function ()
+            {
+                const target = this.dataset.target;
+                $(target).remove();
+            })
+        }
+
+        handleDeleteButtons();
+
+    </script>
+
+{% endblock %}
