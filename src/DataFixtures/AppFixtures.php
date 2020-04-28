@@ -8,13 +8,13 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
     private $encoder;
 
-    public function __construct(UserPasswordEncoder $encoder)
+    public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
     }
@@ -24,7 +24,6 @@ class AppFixtures extends Fixture
         $faker = Factory::create('fr-FR');
 
         // Utilisateurs
-
         $users = [];
         $genres = ['male', 'female'];
 
@@ -39,7 +38,7 @@ class AppFixtures extends Fixture
 
             $picture .= ($genre == 'male' ? 'men/' : 'women/') . $pictureId;
 
-            $hash = $this->encoder->encodePassword($user, 'password')
+            $hash = $this->encoder->encodePassword($user, 'password');
 
             $user->setFirstName($faker->firstName($genre))
                 ->setLastName($faker->lastName)
@@ -83,7 +82,8 @@ class AppFixtures extends Fixture
 
                 $image->setUrl($faker->imageUrl())
                         ->setCaption($faker->sentence())
-                        ->setAd($ad);
+                        ->setAd($ad)
+                ;
 
                 $manager->persist($image);
             }
