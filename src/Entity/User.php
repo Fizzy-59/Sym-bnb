@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(
- *     fields={"email},
+ *     fields={"email"},
  *     message="Un autre utilisateur a déjà cette adresse email"
  * )
  */
@@ -47,12 +47,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url(message="Veuillez donner une URL valide pour l'avatar.")
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Url(message="Veuillez dooner une URL valide pour l'avatar.")
      */
     private $hash;
 
