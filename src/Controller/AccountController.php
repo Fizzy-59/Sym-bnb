@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\PasswordUpdate;
 use App\Entity\User;
 use App\Form\AccountType;
+use App\Form\PasswordUpdateType;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -89,6 +90,9 @@ class AccountController extends AbstractController
      * Permet d'afficher et de traiter le formulaire de modification de profil
      *
      * @Route("/account/profile", name="account_profile")
+     * @param  Request $request
+     * @param  EntityManagerInterface $manager
+     * @return Response
      */
     public function profile(Request $request, EntityManagerInterface $manager)
     {
@@ -108,6 +112,22 @@ class AccountController extends AbstractController
         }
 
         return $this->render('account/profile.html.twig',
+        [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Permet de modifier le mot de passe
+     *
+     * @Route("/account/password-update", name="account_password")
+     */
+    public function updatePassword()
+    {
+        $passwordUpdate = new PasswordUpdate();
+        $form = $this->createForm(PasswordUpdateType::class, $passwordUpdate);
+
+        return $this->render('account/password.html.twig',
         [
             'form' => $form->createView()
         ]);
