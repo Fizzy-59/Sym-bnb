@@ -3,10 +3,17 @@
 namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+
 
 class PasswordUpdate
 {
 
+    /**
+     * @SecurityAssert\UserPassword(
+     *     message="Votre ancien mot de passe n'est pas correct"
+     * )
+     */
     private $oldPassword;
 
 

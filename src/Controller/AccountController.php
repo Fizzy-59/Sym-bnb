@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -21,6 +22,7 @@ class AccountController extends AbstractController
      * Permet d'afficher et de gérer le formulaire de contact
      *
      * @Route("/login", name="account_login")
+     *
      * @param  AuthenticationUtils $utils
      * @return Response
      */
@@ -50,6 +52,7 @@ class AccountController extends AbstractController
      * Permet d'afficher le formulaire d'inscription
      *
      * @Route("/register", name="account_register")
+     *
      * @param  Request $request
      * @param  EntityManagerInterface $manager
      * @param  UserPasswordEncoderInterface $encoder
@@ -90,6 +93,7 @@ class AccountController extends AbstractController
      * Permet d'afficher et de traiter le formulaire de modification de profil
      *
      * @Route("/account/profile", name="account_profile")
+     *
      * @param  Request $request
      * @param  EntityManagerInterface $manager
      * @return Response
@@ -121,11 +125,36 @@ class AccountController extends AbstractController
      * Permet de modifier le mot de passe
      *
      * @Route("/account/password-update", name="account_password")
+     *
+     * @param  Request $request
+     * @param  EntityManagerInterface $manager
+     * @param  UserPasswordEncoderInterface $encoder
+     * @return Response
      */
-    public function updatePassword()
+    public function updatePassword(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
         $passwordUpdate = new PasswordUpdate();
         $form = $this->createForm(PasswordUpdateType::class, $passwordUpdate);
+
+        $user = $this->getUser();
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $newPassword = $passwordUpdate->getNewPassword();
+            $hash = $encoder->encodePassword($user, $newPassword);
+            $user->setHash($hash);
+
+            $manager->persist($user);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "Votre mot de passe a bien été modifié."
+            );
+
+            return $this->redirectToRoute('home');
+        }
 
         return $this->render('account/password.html.twig',
         [
