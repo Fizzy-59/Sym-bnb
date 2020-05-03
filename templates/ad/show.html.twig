@@ -47,21 +47,17 @@
                 </div>
             </div>
             <div class="col">
+                {% set a = ad.author %}
                 <div class="row">
-                    <div class="col-4">
-                        <img src="http://placehold.it/64x64" alt="Avatar">
+                    <div class="col-3">
+                        <img src="{{ a.picture }}" class="avatar avatar-medium" alt="Avatar de {{ a.fullName }}">
                     </div>
                     <div class="col">
-                        <h3>Joseph du pont</h3>
-                        <span class="badge badge-primary">3 annonces</span>
+                        <h3>{{ a.fullName }}</h3>
+                        <span class="badge badge-primary"> {{ a.ads | length }} annonces</span>
                     </div>
                 </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci debitis, dolores eligendi est
-                    in ipsam itaque nesciunt optio quam?</p>
-                <p>Aliquid culpa, cupiditate debitis deleniti dolore est ipsum laboriosam nihil nobis odio provident
-                    quae, ratione rem totam vel veniam vero?</p>
-                <p>Distinctio earum ex illum quos rem! Accusantium consequatur, eius eligendi hic illo, iure iusto
-                    maiores modi mollitia perspiciatis, possimus suscipit!</p>
+                {{ a.description | raw}}
             </div>
         </div>
     </div>
