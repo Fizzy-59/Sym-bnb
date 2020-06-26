@@ -8,17 +8,18 @@ use App\Form\AccountType;
 use App\Form\PasswordUpdateType;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AccountController extends AbstractController
 {
     /**
+     * Login
      * Permet d'afficher et de gérer le formulaire de contact
      *
      * @Route("/login", name="account_login")
@@ -39,6 +40,7 @@ class AccountController extends AbstractController
     }
 
     /**
+     * Logout
      *Permet de se déconnecter
      *
      * @Route("/logout", name="account_logout")
@@ -49,6 +51,7 @@ class AccountController extends AbstractController
     }
 
     /**
+     * Register
      * Permet d'afficher le formulaire d'inscription
      *
      * @Route("/register", name="account_register")
@@ -90,10 +93,12 @@ class AccountController extends AbstractController
 
 
     /**
+     * Access profil
      * Permet d'afficher et de traiter le formulaire de modification de profil
      *
      * @Route("/account/profile", name="account_profile")
      *
+     * @IsGranted("ROLE_USER")
      * @param  Request $request
      * @param  EntityManagerInterface $manager
      * @return Response
@@ -122,10 +127,12 @@ class AccountController extends AbstractController
     }
 
     /**
+     * Modify Password
      * Permet de modifier le mot de passe
      *
      * @Route("/account/password-update", name="account_password")
      *
+     * @IsGranted("ROLE_USER")
      * @param  Request $request
      * @param  EntityManagerInterface $manager
      * @param  UserPasswordEncoderInterface $encoder
@@ -163,9 +170,12 @@ class AccountController extends AbstractController
     }
 
     /**
+     * Account
      * Permet d'afficher le profil de l'utilsateur connecté
      *
      * @Route("/account", name="account_index")
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function myAccount()
     {
