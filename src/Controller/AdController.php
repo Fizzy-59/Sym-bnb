@@ -87,7 +87,7 @@ class AdController extends AbstractController
      *
      * @Route("/ads/{slug}/edit", name="ads_edit")
      *
-     * @Security("is_granted('ROLE_USER') and user === ad.getAuthor(), message="Cette annonce ne vous appartient pas" ")
+     * @Security("is_granted('ROLE_USER') and user === ad.getAuthor()", message="Cette annonce ne vous appartient pas")
      * @param  Ad $ad
      * @param  Request $request
      * @param  EntityManagerInterface $manager
